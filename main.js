@@ -2,6 +2,13 @@ RighrWristX=""
 RightWristY=""
 GameStatus =""
 
+
+function setup(){
+  ball_paddle = loadSound("ball_touch_paddle.wav")
+  miss = loadSound("missed_wav")
+}
+
+
 function startGame()
 {
   GameStatus ="start";
@@ -73,6 +80,7 @@ function draw(){
  fill("black");
  stroke("black");
  rect(0,0,20,700);
+}
 
  
  
@@ -83,7 +91,7 @@ function draw(){
    fill(250,0,0);
     stroke(0,0,250);
     strokeWeight(0.5);
-   paddle1Y = mouseY; 
+   paddle1Y = RightWristY; 
    rect(paddle1X,paddle1Y,paddle1,paddle1Height,100);
    
    
@@ -102,8 +110,7 @@ function draw(){
    models();
    
    //function move call which in very important
-    move();
-}
+    move()
 
 
 
@@ -154,9 +161,11 @@ function move(){
    }
   if (ball.x-2.5*ball.r/2< 0){
   if (ball.y >= paddle1Y&& ball.y <= paddle1Y + paddle1Height) {
+    ball_paddle.start()
     ball.dx = -ball.dx+0.5; 
   }
   else{
+    miss.start()
     pcscore++;
     reset();
     navigator.vibrate(100);
@@ -170,7 +179,7 @@ if(pcscore ==4){
     stroke("white");
     textSize(25)
     text("Game Over!☹☹",width/2,height/2);
-    text("Reload The Page!",width/2,height/2+30)
+    text("Press restart button to play again!",width/2,height/2+30)
     noLoop();
     pcscore = 0;
 }
